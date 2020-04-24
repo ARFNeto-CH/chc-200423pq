@@ -132,9 +132,9 @@ char*       get_time(char* timestamp)
 {
 	struct timespec time;
 	timespec_get(&time, TIME_UTC);
-	char dmahms[30];
-	strftime(dmahms, sizeof dmahms, "%c", localtime(&time.tv_sec));
-	sprintf(timestamp, "%s.%d", dmahms, time.tv_nsec / 100000);
+	char dmahms[50];
+	strftime(dmahms, sizeof(dmahms), "%y/%m/%d %H:%M:%S", localtime(&time.tv_sec));
+	sprintf(timestamp, "%s.%d", dmahms, time.tv_nsec / 10000);
 	return timestamp;
 };	// get_time()
 
