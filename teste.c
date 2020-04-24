@@ -1,5 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-#define _SEMENTE_ 20200401 
+#define _SEMENTE_ 20200502 
  
 #include    "limits.h"
 #include    "locale.h"
@@ -30,7 +30,6 @@ int	main(int argc, char** argv)
 {
 	setlocale(LC_ALL, "Portuguese");
 	srand(20200422);
-	cls();
 	int N = 0; // total de amostras
 	int E = 0; // total de eventos
 	Evento* eventos = NULL;
@@ -39,7 +38,6 @@ int	main(int argc, char** argv)
 	{
 		N = atoi(argv[1]);
 		if (N > 60) N = 60;
-		return 0;
 	};	// end if
 	if (N == 0) N = 3; // padrao de 3 ciclos apenas. use a linha de comando
 	printf("\n\n***** Nessa simulacao: %d [Max 60] ciclos com ate 20 eventos cada\n\n\n", N);
