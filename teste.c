@@ -9,7 +9,9 @@
 #include	"stdlib.h"
 #include	"string.h"
 #include	"time.h"
+#ifndef __GNUC__
 #include    "windows.h"
+#endif
 
 struct fpa_info
 {
