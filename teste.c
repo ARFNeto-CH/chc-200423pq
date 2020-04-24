@@ -67,6 +67,7 @@ int	main(int argc, char** argv)
 
 int		    cls()
 {	// limpa a tela no windows, do jeito oficial
+#ifndef __GNUC__
 	CONSOLE_SCREEN_BUFFER_INFO		info;
 	HANDLE		H = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD		origem = { 0,0 };
@@ -81,6 +82,7 @@ int		    cls()
 		info.dwSize.X * info.dwSize.Y,
 		origem, &total);
 	SetConsoleCursorPosition(H, origem);
+#endif
 	return 0;
 };	// end cls()
 
@@ -128,13 +130,29 @@ Evento*     cria_um_evento()
 	return E;
 };	// cria_evento()
 
+//char* get_time(char* timestamp)
+//{
+//	struct timespec time;
+//	timespec_get(&time, TIME_UTC);
+//	char dmahms[50];
+//	strftime(dmahms, sizeof(dmahms), "%y/%m/%d %H:%M:%S", localtime(&time.tv_sec));
+//	sprintf(timestamp, "%s.%d", dmahms, time.tv_nsec / 10000);
+//	return timestamp;
+//};	// get_time()
+
+//
+// gcc no windows nao roda timespec_get() e tem
+// problemas com clock_gettime()
+//
 char*       get_time(char* timestamp)
 {
-	struct timespec time;
-	timespec_get(&time, TIME_UTC);
+	static int fracao = 1000;
+	time_t agora_mesmo  =time(&agora_mesmo);
+	struct tm* tabela = localtime(&agora_mesmo);
 	char dmahms[50];
-	strftime(dmahms, sizeof(dmahms), "%y/%m/%d %H:%M:%S", localtime(&time.tv_sec));
-	sprintf(timestamp, "%s.%d", dmahms, time.tv_nsec / 10000);
+	strftime(dmahms, sizeof(dmahms), "%y/%m/%d %H:%M:%S", tabela);
+	sprintf(timestamp, "%s.%d", dmahms, fracao);
+	fracao += 1;
 	return timestamp;
 };	// get_time()
 
